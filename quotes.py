@@ -24,6 +24,12 @@ def showQuotes():
     return 'This page will show quotes'
 
 
+#Routing for 'category/new'
+@app.route('/category/new')
+def newCategory():
+    return 'This page for create new category'
+
+
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
