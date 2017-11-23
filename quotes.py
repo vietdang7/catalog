@@ -27,7 +27,7 @@ def showQuotes():
 #Routing for 'category/new'
 @app.route('/category/new')
 def newCategory():
-    return 'This page for create new category'
+    return 'This page for creating new category'
 
 
 #Routing for 'category/<int:category_id>/edit'
@@ -41,6 +41,11 @@ def editCategory(category_id):
 def deleteCategory(category_id):
     return 'This page for deleting category %s' % category_id
 
+
+#Routing for 'quote/new'
+@app.route('/quote/new')
+def newQuote():
+    return 'This page for creating new quote'
 
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
