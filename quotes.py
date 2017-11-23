@@ -47,9 +47,17 @@ def newCategory():
 
 
 #Routing for 'category/<int:category_id>/edit'
-@app.route('/category/<int:category_id>/edit')
+@app.route('/category/<int:category_id>/edit', methods=['GET', 'POST'])
 def editCategory(category_id):
-    return 'This page for editing category %s' % category_id
+    editedCategory = session.query(Category).filter_by(id=category_id).one()
+    if request.method == 'POST':
+        if request.form['name']:
+            editedCategory.name = request.form['name']
+        session.add(editedCategory)
+        session.commit()
+        return redirect(url_for('showQuotes'))
+    else:
+        return render_template('edit_category.html', category_id=category_id, category=editedCategory)
 
 
 #Routing for 'category/<int:category_id>/delete'
