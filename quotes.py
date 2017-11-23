@@ -24,7 +24,7 @@ session = DBSession()
 @app.route('/quotes')
 def showQuotes():
     categories = session.query(Category).order_by(asc(Category.name))
-    session.query(QuoteItem).order_by(desc(QuoteItem.id))
+    quotes = session.query(QuoteItem).order_by(desc(QuoteItem.id))
     return render_template('main.html', categories=categories, quotes=quotes)
 
 
