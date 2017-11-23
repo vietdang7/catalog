@@ -31,6 +31,7 @@ def showQuotes():
 #Routing for '/category/<int:category_id>'
 @app.route('/category/<int:category_id>')
 def showCategory(category_id):
+    quotes = session.query(QuoteItem)
     return 'This page will show quotes of category %s' % category_id
 
 #Routing for 'category/new'

@@ -12,5 +12,13 @@
     <a href="#">Edit</a>
     <a href="#">Delete</a>
     {% endfor %}
+    <h2>Latest quotes</h2>
+    {% for quote in quotes %}
+    <p>{{quote.content}}</p>
+    <p>{{quote.author}}</p>
+    <p>{{quote.category.name}}</p>
+    <a href="#">Edit</a>
+    <a href="#">Delete</a>
+    {% endfor %}
   </body>
 </html>

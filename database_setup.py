@@ -64,7 +64,7 @@ class QuoteItem(Base):
            'name'           : self.name,
            'content'        : self.content,
            'id'             : self.id,
-           'category'       : self.category,
+           'category'       : self.category_name,
        }
 
 
