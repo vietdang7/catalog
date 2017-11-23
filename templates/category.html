@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Motivational quotes in category</title>
+  </head>
+  <body>
+    <h1>Motivational quote(s) in {{category.name}} category</h1>
+    {% for quote in quotes %}
+    <p>{{quote.content}}</p>
+    <p>{{quote.author}}</p>
+    <a href="#">Edit</a>
+    <a href="#">Delete</a>
+    {% endfor %}
+  </body>
+</html>

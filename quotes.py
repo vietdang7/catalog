@@ -31,13 +31,19 @@ def showQuotes():
 #Routing for '/category/<int:category_id>'
 @app.route('/category/<int:category_id>')
 def showCategory(category_id):
-    quotes = session.query(QuoteItem)
-    return 'This page will show quotes of category %s' % category_id
+    category = session.query(Category).filter_by(id=category_id).one()
+    quotes = session.query(QuoteItem).filter_by(category_id=category_id)
+    return render_template('category.html', category_id=category_id, quotes=quotes, category=category)
 
 #Routing for 'category/new'
-@app.route('/category/new')
+@app.route('/category/new', methods=['GET', 'POST'])
 def newCategory():
-    return 'This page for creating new category'
+    if request.method == 'POST':
+        newCategory = Category(name=request.form['name'])
+        session.add(newCategory)
+        session.commit()
+        return redirect(url_for('showQuotes'))
+    return render_template('new_category.html')
 
 
 #Routing for 'category/<int:category_id>/edit'
