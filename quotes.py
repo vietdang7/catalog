@@ -21,8 +21,13 @@ session = DBSession()
 @app.route('/')
 @app.route('/quotes')
 def showQuotes():
-    return 'This page will show quotes'
+    return 'This page will show all quotes'
 
+
+#Routing for '/category/<int:category_id>'
+@app.route('/category/<int:category_id>')
+def showCategory(category_id):
+    return 'This page will show quotes of category %s' % category_id
 
 #Routing for 'category/new'
 @app.route('/category/new')
