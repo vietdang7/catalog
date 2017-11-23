@@ -54,7 +54,10 @@ def editQuote(quote_id):
     return 'This page for editing quote %s' % quote_id
 
 
-
+#Routing for 'quote/<int:quote_id>/delete'
+@app.route('/quote/<int:quote_id>/delete')
+def deleteQuote(quote_id):
+    return 'This page for deleting quote %s' % quote_id
 
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
