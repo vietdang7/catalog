@@ -45,5 +45,27 @@ session.commit()
 
 #Add sample quotes
 quoteItem2 = QuoteItem(user_id=1, name="Work quote", content="Stay positive and happy. Work hard and don't give up hope. Be open to criticism and keep learning. Surround yourself with happy, warm and genuine people.", author="Tena Desae",  category=category1)
-session.add(quoteItem1)
+session.add(quoteItem2)
 session.commit()
+
+#Add sample quotes
+quoteItem3 = QuoteItem(user_id=1, name="Love quote", content="I look at you and see the rest of my life in front of my eyes.", author="Unknown",  category=category2)
+session.add(quoteItem3)
+session.commit()
+
+#Add sample quotes
+quoteItem4 = QuoteItem(user_id=1, name="Another Love quote", content="The greatest happiness of life is the conviction that we are loved; loved for ourselves, or rather, loved in spite of ourselves.", author="Victor Hugo",  category=category2)
+session.add(quoteItem4)
+session.commit()
+
+#Add sample quotes
+quoteItem5 = QuoteItem(user_id=1, name="Life quote", content="Don't cry because it's over, smile because it happened.", author="Dr. Seuss",  category=category3)
+session.add(quoteItem5)
+session.commit()
+
+#Add sample quotes
+quoteItem6 = QuoteItem(user_id=1, name="Life quote", content="You've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth.", author="William W. Purkey",  category=category3)
+session.add(quoteItem6)
+session.commit()
+
+print "Sample quotes added."
