@@ -30,6 +30,11 @@ def newCategory():
     return 'This page for create new category'
 
 
+#Routing for 'category/<int:category_id>/edit'
+@app.route('/category/<int:category_id>/edit')
+def editCategory(category_id):
+    return 'This page for editing category %s' % category_id
+
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
