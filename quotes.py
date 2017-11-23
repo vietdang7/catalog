@@ -35,6 +35,13 @@ def newCategory():
 def editCategory(category_id):
     return 'This page for editing category %s' % category_id
 
+
+#Routing for 'category/<int:category_id>/delete'
+@app.route('/category/<int:category_id>/delete')
+def deleteCategory(category_id):
+    return 'This page for deleting category %s' % category_id
+
+
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
