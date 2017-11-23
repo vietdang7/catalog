@@ -2,6 +2,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+#Import asc desc
+from sqlalchemy import asc, desc
 
 
 #Import from database_setup.py
@@ -21,7 +23,9 @@ session = DBSession()
 @app.route('/')
 @app.route('/quotes')
 def showQuotes():
-    return 'This page will show all quotes'
+    categories = session.query(Category).order_by(asc(Category.name))
+    quotes = session.query(QuoteItem).order_by(desc(QuoteItem.id))
+    return render_template('main.html', categories=categories, quotes=quotes)
 
 
 #Routing for '/category/<int:category_id>'
