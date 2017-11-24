@@ -99,9 +99,15 @@ def editQuote(quote_id):
 
 
 #Routing for 'quote/<int:quote_id>/delete'
-@app.route('/quote/<int:quote_id>/delete')
+@app.route('/quote/<int:quote_id>/delete', methods = ['GET', 'POST'])
 def deleteQuote(quote_id):
-    return 'This page for deleting quote %s' % quote_id
+    deletedQuote = session.query(QuoteItem).filter_by(id=quote_id).one()
+    if request.method == 'POST':
+        session.delete(deletedQuote)
+        session.commit()
+        return redirect(url_for('showQuotes'))
+    else:
+        return render_template('delete_quote.html', quote_id=quote_id, quote=deletedQuote)
 
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
