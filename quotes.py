@@ -73,9 +73,14 @@ def deleteCategory(category_id):
 
 
 #Routing for 'quote/new'
-@app.route('/quote/new')
+@app.route('/quote/new', methods=['GET', 'POST'])
 def newQuote():
-    return 'This page for creating new quote'
+    if request.method == 'POST':
+        newQuote = QuoteItem(name=request.form['name'], content=request.form['content'], author=request.form['author'])
+        session.add(newQuote)
+        session.commit()
+        return redirect(url_for('showQuotes'))
+    return render_template('new_quote.html')
 
 
 #Routing for 'quote/<int:quote_id>/edit'
