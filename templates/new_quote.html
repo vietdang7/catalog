@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>New quote</title>
+  </head>
+  <body>
+    <h1>Create new quote</h1>
+    <form action="{{url_for('newQuote')}}" method="post">
+      <p>Name:</p>
+      <input type="text" name="name">
+      <input type="text" name="author">
+      <input type="text" maxlength="250" name="content">
+      <input type="submit" value="Create">
+      <a href="{{url_for('showQuotes')}}">Cancel</a>
+    </form>
+  </body>
+</html>

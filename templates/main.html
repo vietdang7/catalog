@@ -14,6 +14,7 @@
     <a href="{{url_for('deleteCategory', category_id=category.id)}}">Delete</a>
     {% endfor %}
     <h2>Latest quotes</h2>
+    <a href="{{url_for('newQuote')}}">Create new quote</a>
     {% for quote in quotes %}
     <p>{{quote.content}}</p>
     <p>{{quote.author}}</p>
