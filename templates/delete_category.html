@@ -5,7 +5,7 @@
     <title>Delete Category</title>
   </head>
   <body>
-    <h1>Do you want to delete category {{category.name}}</h1>
+    <h1>Do you want to delete category {{category.name}}?</h1>
     <form action="{{url_for('deleteCategory', category_id=category_id)}}" method="post">
       <input type='submit' value='Delete'>
       <a href="{{url_for('showQuotes')}}">Cancel</a>
