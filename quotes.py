@@ -75,12 +75,13 @@ def deleteCategory(category_id):
 #Routing for 'quote/new'
 @app.route('/quote/new', methods=['GET', 'POST'])
 def newQuote():
+    categories = session.query(Category).all()
     if request.method == 'POST':
-        newQuote = QuoteItem(name=request.form['name'], content=request.form['content'], author=request.form['author'])
+        newQuote = QuoteItem(name=request.form['name'], content=request.form['content'], author=request.form['author'], category_id=request.form['radio'])
         session.add(newQuote)
         session.commit()
         return redirect(url_for('showQuotes'))
-    return render_template('new_quote.html')
+    return render_template('new_quote.html', categories=categories)
 
 
 #Routing for 'quote/<int:quote_id>/edit'

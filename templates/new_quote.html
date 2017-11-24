@@ -8,8 +8,15 @@
     <form action="{{url_for('newQuote')}}" method="post">
       <p>Name:</p>
       <input type="text" name="name">
+      <p>Author:</p>
       <input type="text" name="author">
-      <input type="text" maxlength="250" name="content">
+      <p>Category:</p>
+      {% for category in categories %}
+      <input type="radio" id="{{category.id}}" name="radio" value="{{category.id}}"> {{category.name}}
+      {% endfor %}
+      <p>Content:</p>
+      <textarea name="content" rows="8" cols="80"></textarea>
+      <br>
       <input type="submit" value="Create">
       <a href="{{url_for('showQuotes')}}">Cancel</a>
     </form>
