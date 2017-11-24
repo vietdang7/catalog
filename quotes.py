@@ -85,9 +85,17 @@ def newQuote():
 
 
 #Routing for 'quote/<int:quote_id>/edit'
-@app.route('/quote/<int:quote_id>/edit')
+@app.route('/quote/<int:quote_id>/edit', methods=['GET', 'POST'])
 def editQuote(quote_id):
-    return 'This page for editing quote %s' % quote_id
+    editedQuote = session.query(QuoteItem).filter_by(id=quote_id).one()
+    if request.method == 'POST':
+        if request.form['name']:
+            editedQuote.name = request.form['name']
+        session.add(editedQuote)
+        session.commit()
+        return redirect(url_for('showQuotes'))
+    else:
+        return render_template('edit_quote.html', quote_id=quote_id, quote=editedQuote)
 
 
 #Routing for 'quote/<int:quote_id>/delete'

@@ -16,11 +16,12 @@
     <h2>Latest quotes</h2>
     <a href="{{url_for('newQuote')}}">Create new quote</a>
     {% for quote in quotes %}
+    <p>{{quote.name}}</p>
     <p>{{quote.content}}</p>
     <p>{{quote.author}}</p>
     <p>{{quote.category.name}}</p>
-    <a href="#">Edit</a>
-    <a href="#">Delete</a>
+    <a href="{{url_for('editQuote', quote_id=quote.id)}}">Edit</a>
+    <a href="{{url_for('deleteQuote', quote_id=quote.id)}}">Delete</a>
     {% endfor %}
   </body>
 </html>
