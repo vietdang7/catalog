@@ -19,6 +19,34 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
+#Making API Endpoint for '/quotes/JSON'
+@app.route('/quotes/JSON')
+def quotesJSON():
+    quotes = session.query(QuoteItem).all()
+    return jsonify(quotes=[q.serialize for q in quotes])
+
+
+#Making API Endpoint for '/quote/<int:quote_id>/JSON'
+@app.route('/quote/<int:quote_id>/JSON')
+def quoteJSON(quote_id):
+    quote = session.query(QuoteItem).filter_by(id=quote_id).one()
+    return jsonify(quote=quote.serialize)
+
+
+#Making API Endpoint for '/categories/JSON'
+@app.route('/categories/JSON')
+def categoriesJSON():
+    categories = session.query(Category).all()
+    return jsonify(categories=[c.serialize for c in categories])
+
+
+#Making API Endpoint for '/category/<int:category_id>/JSON'
+@app.route('/category/<int:category_id>/JSON')
+def categoryJSON(category_id):
+    category = session.query(Category).filter_by(id=category_id).one()
+    return jsonify(category=category.serialize)
+
+
 #Routing for '/' and '/quotes'
 @app.route('/')
 @app.route('/quotes')

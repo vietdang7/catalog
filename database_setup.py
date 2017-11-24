@@ -18,6 +18,18 @@ class User(Base):
     picture = Column(String(250))
 
 
+    #property decoration for serialize (JSON)
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'name'          : self.name,
+            'id'            : self.id,
+            'email'         : self.email,
+            'picture'       : self.picture,
+        }
+
+
 #Setup 'Category' table
 class Category(Base):
     __tablename__ = 'category'
@@ -63,8 +75,9 @@ class QuoteItem(Base):
        return {
            'name'           : self.name,
            'content'        : self.content,
+           'author'         : self.author,
            'id'             : self.id,
-           'category'       : self.category_name,
+           'category'       : self.category.name,
        }
 
 
