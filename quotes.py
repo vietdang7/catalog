@@ -61,9 +61,15 @@ def editCategory(category_id):
 
 
 #Routing for 'category/<int:category_id>/delete'
-@app.route('/category/<int:category_id>/delete')
+@app.route('/category/<int:category_id>/delete', methods=['GET', 'POST'])
 def deleteCategory(category_id):
-    return 'This page for deleting category %s' % category_id
+    deletedCategory = session.query(Category).filter_by(id=category_id).one()
+    if request.method == 'POST':
+        session.delete(deletedCategory)
+        session.commit()
+        return redirect(url_for('showQuotes'))
+    else:
+        return render_template('delete_category.html', category_id=category_id, category=deletedCategory)
 
 
 #Routing for 'quote/new'
