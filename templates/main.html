@@ -6,6 +6,16 @@
   </head>
   <body>
     <h1>Motivational Quotes</h1>
+    <!-- Flash Message -->
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+              {% for message in messages %}
+                <li><strong> {{ message }} </strong></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
     <h2>List of categories</h2>
     <a href="{{url_for('newCategory')}}">Create new category</a>
     {% for category in categories %}

@@ -70,6 +70,8 @@ def newCategory():
         newCategory = Category(name=request.form['name'])
         session.add(newCategory)
         session.commit()
+        #Send message to user in main.html
+        flash('New category created')
         return redirect(url_for('showQuotes'))
     return render_template('new_category.html')
 
@@ -83,6 +85,8 @@ def editCategory(category_id):
             editedCategory.name = request.form['name']
         session.add(editedCategory)
         session.commit()
+        #Send message to user in main.html
+        flash('Category edited')
         return redirect(url_for('showQuotes'))
     else:
         return render_template('edit_category.html', category_id=category_id, category=editedCategory)
@@ -95,6 +99,8 @@ def deleteCategory(category_id):
     if request.method == 'POST':
         session.delete(deletedCategory)
         session.commit()
+        #Send message to user in main.html
+        flash('Category deleted')
         return redirect(url_for('showQuotes'))
     else:
         return render_template('delete_category.html', category_id=category_id, category=deletedCategory)
@@ -108,6 +114,8 @@ def newQuote():
         newQuote = QuoteItem(name=request.form['name'], content=request.form['content'], author=request.form['author'], category_id=request.form['radio'])
         session.add(newQuote)
         session.commit()
+        #Send message to user in main.html
+        flash('New quote created')
         return redirect(url_for('showQuotes'))
     return render_template('new_quote.html', categories=categories)
 
@@ -121,6 +129,8 @@ def editQuote(quote_id):
             editedQuote.name = request.form['name']
         session.add(editedQuote)
         session.commit()
+        #Send message to user in main.html
+        flash('Quote edited')
         return redirect(url_for('showQuotes'))
     else:
         return render_template('edit_quote.html', quote_id=quote_id, quote=editedQuote)
@@ -133,6 +143,8 @@ def deleteQuote(quote_id):
     if request.method == 'POST':
         session.delete(deletedQuote)
         session.commit()
+        #Send message to user in main.html
+        flash('Quote deleted')
         return redirect(url_for('showQuotes'))
     else:
         return render_template('delete_quote.html', quote_id=quote_id, quote=deletedQuote)
