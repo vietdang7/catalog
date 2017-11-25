@@ -4,7 +4,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 #Import asc desc
 from sqlalchemy import asc, desc
-
+#Import for anti forgery state token
+from flask import session as login_session
+import random, string
 
 #Import from database_setup.py
 from database_setup import Base, User, Category, CatalogItem
@@ -17,6 +19,15 @@ Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
+
+#Making anti-forgery state token
+@app.route('/login')
+def showLogin():
+    state = ''.join(random.choice(string.ascii_uppercase + string.digits)
+                    for x in xrange(32))
+    login_session['state'] = state
+    return render_template('login.html', STATE=state)
 
 
 #Making API Endpoint for '/items/JSON'
