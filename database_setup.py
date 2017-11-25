@@ -53,14 +53,13 @@ class Category(Base):
 
 
 #Setup 'QuoteItem' table
-class QuoteItem(Base):
-    __tablename__ = 'quoteitem'
+class CatalogItem(Base):
+    __tablename__ = 'catalogitem'
 
 
     name = Column(String(80), nullable = False)
     id = Column(Integer, primary_key = True)
-    content = Column(String(250))
-    author = Column(String(80), nullable = False)
+    description = Column(String(250))
     category_id = Column(Integer,ForeignKey('category.id'))
     category = relationship(Category)
     user_id = Column(Integer, ForeignKey('user.id'))
@@ -74,15 +73,14 @@ class QuoteItem(Base):
        """Return object data in easily serializeable format"""
        return {
            'name'           : self.name,
-           'content'        : self.content,
-           'author'         : self.author,
+           'description'    : self.description,
            'id'             : self.id,
            'category'       : self.category.name,
        }
 
 
 
-engine = create_engine('sqlite:///quotes.db')
+engine = create_engine('sqlite:///catalog.db')
 
 
 Base.metadata.create_all(engine)

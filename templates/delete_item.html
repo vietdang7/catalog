@@ -2,11 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Delete Category</title>
+    <title>Delete Item</title>
   </head>
   <body>
-    <h1>Do you want to delete category {{category.name}}?</h1>
-    <form action="{{url_for('deleteCategory', category_id=category_id)}}" method="post">
+    <h1>Do you want to delete quote {{item.name}}?</h1>
+    <form action="{{url_for('deleteItem', item_id=item_id)}}" method="post">
       <input type='submit' value='Delete'>
       <a href="{{url_for('showItems')}}">Cancel</a>
     </form>

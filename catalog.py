@@ -7,30 +7,30 @@ from sqlalchemy import asc, desc
 
 
 #Import from database_setup.py
-from database_setup import Base, User, Category, QuoteItem
+from database_setup import Base, User, Category, CatalogItem
 
 app = Flask(__name__)
 
 #Create database connection
-engine = create_engine('sqlite:///quotes.db')
+engine = create_engine('sqlite:///catalog.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-#Making API Endpoint for '/quotes/JSON'
-@app.route('/quotes/JSON')
-def quotesJSON():
-    quotes = session.query(QuoteItem).all()
-    return jsonify(quotes=[q.serialize for q in quotes])
+#Making API Endpoint for '/items/JSON'
+@app.route('/items/JSON')
+def itemsJSON():
+    items = session.query(CatalogItem).all()
+    return jsonify(items=[i.serialize for i in items])
 
 
-#Making API Endpoint for '/quote/<int:quote_id>/JSON'
-@app.route('/quote/<int:quote_id>/JSON')
-def quoteJSON(quote_id):
-    quote = session.query(QuoteItem).filter_by(id=quote_id).one()
-    return jsonify(quote=quote.serialize)
+#Making API Endpoint for '/item/<int:item_id>/JSON'
+@app.route('/item/<int:item_id>/JSON')
+def itemJSON(item_id):
+    item = session.query(CatalogItem).filter_by(id=item_id).one()
+    return jsonify(item=item.serialize)
 
 
 #Making API Endpoint for '/categories/JSON'
@@ -49,19 +49,19 @@ def categoryJSON(category_id):
 
 #Routing for '/' and '/quotes'
 @app.route('/')
-@app.route('/quotes')
-def showQuotes():
+@app.route('/items')
+def showItems():
     categories = session.query(Category).order_by(asc(Category.name))
-    quotes = session.query(QuoteItem).order_by(desc(QuoteItem.id))
-    return render_template('main.html', categories=categories, quotes=quotes)
+    items = session.query(CatalogItem).order_by(desc(CatalogItem.id))
+    return render_template('main.html', categories=categories, items=items)
 
 
 #Routing for '/category/<int:category_id>'
 @app.route('/category/<int:category_id>')
 def showCategory(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
-    quotes = session.query(QuoteItem).filter_by(category_id=category_id)
-    return render_template('category.html', category_id=category_id, quotes=quotes, category=category)
+    items = session.query(CatalogItem).filter_by(category_id=category_id)
+    return render_template('category.html', category_id=category_id, items=items, category=category)
 
 #Routing for 'category/new'
 @app.route('/category/new', methods=['GET', 'POST'])
@@ -72,7 +72,7 @@ def newCategory():
         session.commit()
         #Send message to user in main.html
         flash('New category created')
-        return redirect(url_for('showQuotes'))
+        return redirect(url_for('showItems'))
     return render_template('new_category.html')
 
 
@@ -87,7 +87,7 @@ def editCategory(category_id):
         session.commit()
         #Send message to user in main.html
         flash('Category edited')
-        return redirect(url_for('showQuotes'))
+        return redirect(url_for('showItems'))
     else:
         return render_template('edit_category.html', category_id=category_id, category=editedCategory)
 
@@ -101,53 +101,53 @@ def deleteCategory(category_id):
         session.commit()
         #Send message to user in main.html
         flash('Category deleted')
-        return redirect(url_for('showQuotes'))
+        return redirect(url_for('showItems'))
     else:
         return render_template('delete_category.html', category_id=category_id, category=deletedCategory)
 
 
-#Routing for 'quote/new'
-@app.route('/quote/new', methods=['GET', 'POST'])
-def newQuote():
+#Routing for 'item/new'
+@app.route('/item/new', methods=['GET', 'POST'])
+def newItem():
     categories = session.query(Category).all()
     if request.method == 'POST':
-        newQuote = QuoteItem(name=request.form['name'], content=request.form['content'], author=request.form['author'], category_id=request.form['radio'])
-        session.add(newQuote)
+        newItem = CatalogItem(name=request.form['name'], description=request.form['description'], category_id=request.form['radio'])
+        session.add(newItem)
         session.commit()
         #Send message to user in main.html
-        flash('New quote created')
-        return redirect(url_for('showQuotes'))
-    return render_template('new_quote.html', categories=categories)
+        flash('New item created')
+        return redirect(url_for('showItems'))
+    return render_template('new_item.html', categories=categories)
 
 
-#Routing for 'quote/<int:quote_id>/edit'
-@app.route('/quote/<int:quote_id>/edit', methods=['GET', 'POST'])
-def editQuote(quote_id):
-    editedQuote = session.query(QuoteItem).filter_by(id=quote_id).one()
+#Routing for 'item/<int:item_id>/edit'
+@app.route('/item/<int:item_id>/edit', methods=['GET', 'POST'])
+def editItem(item_id):
+    editedItem = session.query(CatalogItem).filter_by(id=item_id).one()
     if request.method == 'POST':
         if request.form['name']:
-            editedQuote.name = request.form['name']
-        session.add(editedQuote)
+            editedItem.name = request.form['name']
+        session.add(editedItem)
         session.commit()
         #Send message to user in main.html
-        flash('Quote edited')
-        return redirect(url_for('showQuotes'))
+        flash('Item edited')
+        return redirect(url_for('showItems'))
     else:
-        return render_template('edit_quote.html', quote_id=quote_id, quote=editedQuote)
+        return render_template('edit_item.html', item_id=item_id, item=editedItem)
 
 
-#Routing for 'quote/<int:quote_id>/delete'
-@app.route('/quote/<int:quote_id>/delete', methods = ['GET', 'POST'])
-def deleteQuote(quote_id):
-    deletedQuote = session.query(QuoteItem).filter_by(id=quote_id).one()
+#Routing for 'item/<int:item_id>/delete'
+@app.route('/item/<int:item_id>/delete', methods = ['GET', 'POST'])
+def deleteItem(item_id):
+    deletedItem = session.query(CatalogItem).filter_by(id=item_id).one()
     if request.method == 'POST':
-        session.delete(deletedQuote)
+        session.delete(deletedItem)
         session.commit()
         #Send message to user in main.html
-        flash('Quote deleted')
-        return redirect(url_for('showQuotes'))
+        flash('Item deleted')
+        return redirect(url_for('showItems'))
     else:
-        return render_template('delete_quote.html', quote_id=quote_id, quote=deletedQuote)
+        return render_template('delete_item.html', item_id=item_id, item=deletedItem)
 
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
