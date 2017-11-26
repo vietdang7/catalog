@@ -13,13 +13,19 @@
   </head>
   <body>
     <div class="container">
-      <h1>Create new category</h1>
-      <form action="{{url_for('newCategory')}}" method="post">
-        <p>Name:</p>
-        <input type="text" name="name">
-        <input type="submit" value="Create">
-        <a href="{{url_for('showItems')}}">Cancel</a>
-      </form>
+      <div class="mx-auto">
+        <h1>Create new category</h1>
+
+        <form action="{{url_for('newCategory')}}" method="post">
+          <p>Name:</p>
+          <input type="text" name="name">
+          <br>
+          <br>
+          <input type="submit" value="Create">
+          <a href="{{url_for('showItems')}}">Cancel</a>
+        </form>
+      </div>
+
     </div>
 
   </body>
