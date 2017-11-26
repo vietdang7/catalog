@@ -259,8 +259,11 @@ def showCategory(category_id):
 #Routing for 'category/new'
 @app.route('/category/new', methods=['GET', 'POST'])
 def newCategory():
+    # Check if user is logged in
+    if 'username' not in login_session:
+        return redirect('/login')
     if request.method == 'POST':
-        newCategory = Category(name=request.form['name'])
+        newCategory = Category(name=request.form['name'], user_id=login_session['user_id'])
         session.add(newCategory)
         session.commit()
         #Send message to user in main.html
@@ -272,6 +275,9 @@ def newCategory():
 #Routing for 'category/<int:category_id>/edit'
 @app.route('/category/<int:category_id>/edit', methods=['GET', 'POST'])
 def editCategory(category_id):
+    # Check if user is logged in
+    if 'username' not in login_session:
+        return redirect('/login')
     editedCategory = session.query(Category).filter_by(id=category_id).one()
     if request.method == 'POST':
         if request.form['name']:
@@ -288,6 +294,9 @@ def editCategory(category_id):
 #Routing for 'category/<int:category_id>/delete'
 @app.route('/category/<int:category_id>/delete', methods=['GET', 'POST'])
 def deleteCategory(category_id):
+    # Check if user is logged in
+    if 'username' not in login_session:
+        return redirect('/login')
     deletedCategory = session.query(Category).filter_by(id=category_id).one()
     if request.method == 'POST':
         session.delete(deletedCategory)
@@ -303,8 +312,11 @@ def deleteCategory(category_id):
 @app.route('/item/new', methods=['GET', 'POST'])
 def newItem():
     categories = session.query(Category).all()
+    # Check if user is logged in
+    if 'username' not in login_session:
+        return redirect('/login')
     if request.method == 'POST':
-        newItem = CatalogItem(name=request.form['name'], description=request.form['description'], category_id=request.form['radio'])
+        newItem = CatalogItem(name=request.form['name'], description=request.form['description'], category_id=request.form['radio'], user_id=login_session['user_id'])
         session.add(newItem)
         session.commit()
         #Send message to user in main.html
@@ -317,6 +329,9 @@ def newItem():
 @app.route('/item/<int:item_id>/edit', methods=['GET', 'POST'])
 def editItem(item_id):
     editedItem = session.query(CatalogItem).filter_by(id=item_id).one()
+    # Check if user is logged in
+    if 'username' not in login_session:
+        return redirect('/login')
     if request.method == 'POST':
         if request.form['name']:
             editedItem.name = request.form['name']
@@ -333,6 +348,9 @@ def editItem(item_id):
 @app.route('/item/<int:item_id>/delete', methods = ['GET', 'POST'])
 def deleteItem(item_id):
     deletedItem = session.query(CatalogItem).filter_by(id=item_id).one()
+    # Check if user is logged in
+    if 'username' not in login_session:
+        return redirect('/login')
     if request.method == 'POST':
         session.delete(deletedItem)
         session.commit()
