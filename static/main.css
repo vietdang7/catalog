@@ -7,3 +7,6 @@
 a {
   text-decoration: none !important;
 }
+.a-block {
+  display: block;
+}

@@ -41,11 +41,11 @@
       <!-- Flash Message -->
 
       <div class="row">
-        <div class="col">
+        <div class="col align-items-center">
           <h2>List of categories</h2>
 
           {% for category in categories %}
-          <p>{{category.name}}</p>
+            <a href="{{url_for('showCategory', category_id = category.id)}}" class="a-block">{{category.name}}</a>
             {%if 'username' in session %}
             <a href="{{url_for('editCategory', category_id=category.id)}}">Edit</a>
             <a href="{{url_for('deleteCategory', category_id=category.id)}}">Delete</a>
@@ -56,7 +56,7 @@
           <h2>Latest items</h2>
 
           {% for item in items %}
-          <p>{{item.name}} ({{item.category.name}})</p>
+          <p>{{item.name}} (<em>{{item.category.name}}</em>)</p>
             {%if 'username' in session %}
               <a href="{{url_for('editItem', item_id=item.id)}}">Edit</a>
               <a href="{{url_for('deleteItem', item_id=item.id)}}">Delete</a>
