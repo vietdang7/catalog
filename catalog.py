@@ -228,8 +228,8 @@ def showItems():
     items = session.query(CatalogItem).order_by(desc(CatalogItem.id))
     return render_template('main.html', categories=categories, items=items)
 
-#Routing for '/item/<int:item_id'
-@app.route('/item/<int:item_id', methods=['GET', 'POST'])
+#Routing for '/item/<int:item_id>'
+@app.route('/item/<int:item_id>', methods=['GET', 'POST'])
 def showItem(item_id):
     oneItem = session.query(CatalogItem).filter_by(id=item_id).one()
     return render_template('one_item.html', item_id=item_id, item=oneItem)

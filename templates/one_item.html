@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Item information</title>
+  </head>
+  <body>
+    <h1>Information of item {{item.name}} </h1>
+
+    <p>{{item.name}}</p>
+    <p>{{item.description}}</p>
+    {%if 'username' in session %}
+      <a href="{{url_for('editItem', item_id=item.id)}}">Edit</a>
+      <a href="{{url_for('deleteItem', item_id=item.id)}}">Delete</a>
+    {% endif %}
+  </body>
+</html>
