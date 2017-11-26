@@ -11,22 +11,25 @@
     <title>New Item</title>
   </head>
   <body>
-    <div class="mx-auto">
-      <h1>Create new item</h1>
-      <form action="{{url_for('newItem')}}" method="post">
-        <p>Name:</p>
-        <input type="text" name="name">
-        <p>Category:</p>
-        {% for category in categories %}
-        <input type="radio" id="{{category.id}}" name="radio" value="{{category.id}}"> {{category.name}}
-        {% endfor %}
-        <p>Description:</p>
-        <textarea name="description" rows="8" cols="80"></textarea>
-        <br>
-        <input type="submit" value="Create">
-        <a href="{{url_for('showItems')}}">Cancel</a>
-      </form>
+    <div class="container">
+      <div class="mx-auto">
+        <h1>Create new item</h1>
+        <form action="{{url_for('newItem')}}" method="post">
+          <p>Name:</p>
+          <input type="text" name="name">
+          <p>Category:</p>
+          {% for category in categories %}
+          <span class="mr-2"><input type="radio" id="{{category.id}}" name="radio" value="{{category.id}}"> {{category.name}}</span>
+          {% endfor %}
+          <p>Description:</p>
+          <textarea name="description" rows="8" cols="80"></textarea>
+          <br>
+          <input type="submit" value="Create">
+          <a href="{{url_for('showItems')}}">Cancel</a>
+        </form>
+      </div>
     </div>
+
 
   </body>
 </html>
