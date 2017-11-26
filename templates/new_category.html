@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <!-- Link to Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-    <!-- Link to main.css -->
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='main.css') }}">
-    <title>New category</title>
-  </head>
-  <body>
-    <div class="container">
+{% extends "base.html" %}
+{% block content %}
+{% include "header.html" %}
       <div class="mx-auto">
         <h1>Create new category</h1>
 
@@ -26,7 +14,4 @@
         </form>
       </div>
 
-    </div>
-
-  </body>
-</html>
+  {% endblock %}

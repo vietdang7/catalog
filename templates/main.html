@@ -1,44 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <!-- Link to Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-    <!-- Link to main.css -->
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='main.css') }}">
-    <title>Catalog Items</title>
-  </head>
-  <body>
-    <div class="container-fluid">
-      <!-- Navbar section -->
-      <nav class="navbar navbar-dark bg-primary">
-        <a class="navbar-brand" id="main-brand-text">Catalog Item Application</a>
-        <div class="d-flex justify-content-end align-items-center">
-          <a href="{{url_for('showItems')}}" class="text-white mr-5">Show All Items</a>
-          {%if 'username' not in session %}
-  			    <a href="{{url_for('showLogin')}}" class="btn btn-success">Click Here to Login </a>
-  			  {% else %}
-            <a href="{{url_for('newCategory')}}" class="text-white mr-5">Create new category</a>
-            <a href="{{url_for('newItem')}}" class="text-white mr-5">Create new item</a>
-  			    <a href="{{url_for('disconnect')}}" class="btn btn-success">Logout </a>
-  			  {% endif %}
-        </div>
-      </nav> <!-- End Navbar section -->
-      <div class="alert alert-success d-flex justify-content-center">
-        {% with messages = get_flashed_messages() %}
-          {% if messages %}
-
-              {% for message in messages %}
-                <strong> {{ message }} </strong>
-              {% endfor %}
-
-          {% endif %}
-        {% endwith %}
-      </div>
-      <!-- Flash Message -->
+{% extends "base.html" %}
+{% block content %}
+{% include "header.html" %}
 
       <div class="row">
         <div class="col align-items-center">
@@ -71,14 +33,4 @@
         </div>
       </div>
 
-
-
-    </div> <!-- End .container-fluid -->
-
-
-    <!-- Bootstrap Javascript -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-  </body>
-</html>
+{% endblock %}

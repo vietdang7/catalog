@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Delete Category</title>
-  </head>
-  <body>
+{% extends "base.html" %}
+{% block content %}
+{% include "header.html" %}
+  <div class="mx-auto">
     <h1>Do you want to delete category {{category.name}}?</h1>
     <form action="{{url_for('deleteCategory', category_id=category_id)}}" method="post">
       <input type='submit' value='Delete'>
       <a href="{{url_for('showItems')}}">Cancel</a>
     </form>
-  </body>
-</html>
+  </div>
+{% endblock %}
