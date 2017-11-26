@@ -280,7 +280,7 @@ def editCategory(category_id):
         return redirect('/login')
     editedCategory = session.query(Category).filter_by(id=category_id).one()
     if editedCategory.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to edit other users' category.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to edit this category. Please create your own category in order to edit it.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         if request.form['name']:
             editedCategory.name = request.form['name']
@@ -300,6 +300,8 @@ def deleteCategory(category_id):
     if 'username' not in login_session:
         return redirect('/login')
     deletedCategory = session.query(Category).filter_by(id=category_id).one()
+    if deletedCategory.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to delete this category. Please create your own category in order to delete it.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(deletedCategory)
         session.commit()
@@ -330,10 +332,12 @@ def newItem():
 #Routing for 'item/<int:item_id>/edit'
 @app.route('/item/<int:item_id>/edit', methods=['GET', 'POST'])
 def editItem(item_id):
-    editedItem = session.query(CatalogItem).filter_by(id=item_id).one()
     # Check if user is logged in
     if 'username' not in login_session:
         return redirect('/login')
+    editedItem = session.query(CatalogItem).filter_by(id=item_id).one()
+    if editedItem.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to edit this item. Please create your own item in order to edit it.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         if request.form['name']:
             editedItem.name = request.form['name']
@@ -349,10 +353,12 @@ def editItem(item_id):
 #Routing for 'item/<int:item_id>/delete'
 @app.route('/item/<int:item_id>/delete', methods = ['GET', 'POST'])
 def deleteItem(item_id):
-    deletedItem = session.query(CatalogItem).filter_by(id=item_id).one()
     # Check if user is logged in
     if 'username' not in login_session:
         return redirect('/login')
+    deletedItem = session.query(CatalogItem).filter_by(id=item_id).one()
+    if deletedItem.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to edit this item. Please create your own item in order to edit it.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(deletedItem)
         session.commit()
