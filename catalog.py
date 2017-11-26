@@ -117,7 +117,7 @@ def gconnect():
     login_session['username'] = data['name']
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
-
+    login_session['provider'] = 'google'
 
     #Check if user exists, make new user if it doesn't.
     user_id = getUserID(login_session['email'])
@@ -161,18 +161,17 @@ def getUserID(email):
 
 
 #Disconnect - Revoke a current user's token and reset their login sessionmaker
-@app.route('/gdisconnect')
+@app.route("/gdisconnect")
 def gdisconnect():
-    access_token = login_session.get('access_token')
-    if access_token is None:
-        print 'Access Token is None'
+    # Only disconnect a connected user.
+    credentials = login_session.get('credentials')
+    if credentials is None:
         response = make_response(json.dumps('Current user not connected.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
-    print 'In gdisconnect access token is %s', access_token
-    print 'User name is: '
-    print login_session['username']
-    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token']
+    # Execute HTTP GET request to revoke current token
+    access_token = credentials.access_token
+    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % access_token
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
     print 'result is '
@@ -191,25 +190,6 @@ def gdisconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
-
-# Disconnect based on provider
-@app.route('/disconnect')
-def disconnect():
-    if 'provider' in login_session:
-        if login_session['provider'] == 'google':
-            gdisconnect()
-            del login_session['gplus_id']
-            del login_session['access_token']
-        del login_session['username']
-        del login_session['email']
-        del login_session['picture']
-        del login_session['user_id']
-        del login_session['provider']
-        flash("You have successfully been logged out.")
-        return redirect(url_for('showItems'))
-    else:
-        flash("You were not logged in")
-        return redirect(url_for('showItems'))
 
 
 #Making API Endpoint for '/items/JSON'
@@ -367,6 +347,26 @@ def deleteItem(item_id):
         return redirect(url_for('showItems'))
     else:
         return render_template('delete_item.html', item_id=item_id, item=deletedItem)
+
+
+# Disconnect based on provider
+@app.route('/disconnect')
+def disconnect():
+    if 'provider' in login_session:
+        if login_session['provider'] == 'google':
+            gdisconnect()
+            del login_session['gplus_id']
+            del login_session['access_token']
+        del login_session['username']
+        del login_session['email']
+        del login_session['picture']
+        del login_session['user_id']
+        del login_session['provider']
+        flash("You have successfully been logged out.")
+        return redirect(url_for('showItems'))
+    else:
+        flash("You were not logged in")
+        return redirect(url_for('showItems'))
 
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'

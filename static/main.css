@@ -1,0 +1,9 @@
+* {
+  font-family: 'Ubuntu', sans-serif;
+}
+#main-brand-text {
+  color: white;
+}
+a {
+  text-decoration: none !important;
+}
