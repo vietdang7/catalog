@@ -7,8 +7,8 @@
         <p>{{item.name}}</p>
         <p>{{item.description}}</p>
         {%if 'username' in session %}
-          <a href="{{url_for('editItem', item_id=item.id)}}">Edit</a>
-          <a href="{{url_for('deleteItem', item_id=item.id)}}">Delete</a>
+          <a href="{{url_for('editItem', item_id=item.id)}}" class="btn btn-outline-secondary btn-sm">Edit</a>
+          <a href="{{url_for('deleteItem', item_id=item.id)}}" class="btn btn-outline-danger btn-sm">Delete</a>
         {% endif %}
       </div>
   {% endblock %}
