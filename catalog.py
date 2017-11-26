@@ -279,6 +279,8 @@ def editCategory(category_id):
     if 'username' not in login_session:
         return redirect('/login')
     editedCategory = session.query(Category).filter_by(id=category_id).one()
+    if editedCategory.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to edit other users' category.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         if request.form['name']:
             editedCategory.name = request.form['name']
