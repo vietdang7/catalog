@@ -59,7 +59,7 @@
           <h2>Latest items</h2>
 
           {% for item in items %}
-          <a href="{{url_for('showItem', item_id = item.id)}}">{{item.name}}</a> (<em>{{item.category.name}}</em>)
+          <p class="mb-1"><a href="{{url_for('showItem', item_id = item.id)}}">{{item.name}}</a> (<em>{{item.category.name}}</em>)</p>
             {%if 'username' in session %}
             <div class="mb-2">
               <a href="{{url_for('editItem', item_id=item.id)}}"class="btn btn-outline-secondary btn-sm">Edit</a>
