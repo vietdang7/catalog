@@ -6,8 +6,10 @@
     {% for item in items %}
     <p>{{item.name}}</p>
     <p>{{item.description}}</p>
-    <a href="{{url_for('editItem', item_id=item.id)}}">Edit</a>
-    <a href="{{url_for('deleteItem', item_id=item.id)}}">Delete</a>
+    {%if 'username' in session %}
+      <a href="{{url_for('editItem', item_id=item.id)}}">Edit</a>
+      <a href="{{url_for('deleteItem', item_id=item.id)}}">Delete</a>
+    {% endif %}
     {% endfor %}
   </div>
 
